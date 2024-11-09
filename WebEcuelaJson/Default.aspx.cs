@@ -1,21 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Crud;
+using Newtonsoft.Json;
 
 public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request["accion"] == null) return;
+
         switch (Request["accion"])
         {
 
             case "ADDUSUARIO": AddUsuario(); break;
             case "LISTUSUARIOS": ListUsuarios(); break;
+
+            case "DELETEUSER": DeleteUser(); break;
+            case "MODIFYUSER": ModifyUser(); break;
+            case "FINDUSER": FindUser(); break;
+
         }
     }
 
@@ -43,5 +51,57 @@ public partial class _Default : System.Web.UI.Page
         Response.Write(lista);
 
     }
-} 
+
+    private void DeleteUser()
+    {
+        Usuario U = new Usuario();
+        U.ID = int.Parse(Request["ID"]);
+
+        try
+        {
+            U.Erase();
+            Response.Write("OK");
+        }
+        catch (Exception er)
+        {
+            Response.Write(er.Message);
+        }
+    }
+
+    private void ModifyUser()
+    {
+        Usuario U = new Usuario();
+        U.ID = int.Parse(Request["ID"]);
+
+        try
+        {
+            U.Modify();
+            Response.Write("OK");
+        }
+        catch (Exception er)
+        {
+            Response.Write(er.Message);
+        }
+    }
+
+    private void FindUser()
+    {
+        Usuario U = new Usuario();
+        U.ID = int.Parse(Request["ID"]);
+        //U.Dni = int.Parse(Request["Dni"]);
+        try
+        {
+
+            string user = JsonConvert.SerializeObject(U.Find());
+
+            Response.Write(user);
+        }
+        catch (Exception er)
+        {
+            Response.Write(er.Message);
+        }
+    }
+
+
+}
 
