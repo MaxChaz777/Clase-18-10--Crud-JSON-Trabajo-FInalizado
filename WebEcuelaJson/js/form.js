@@ -27,7 +27,9 @@ const $$form = function () {
         //f.reset();
         
       
-      };
+      }
+
+
       const ListUsuarios = function () {
           let fd = new FormData();
           fd.append("accion", "LISTUSUARIOS");
@@ -44,6 +46,53 @@ const $$form = function () {
           return;
       };
 
+
+
+
+      this.modifyUser = function (user) {
+
+          const Submit = function () {
+              try {
+                  let Fd = new FormData();
+                  Fd.append("accion", "MODIFYUSER");
+                  Fd.append("ID", user.ID);
+                  Fd.append("Nombre", nombre.value);
+                  Fd.append("Mail", mail.value);
+                  Fd.append("Dni", dni.value);
+                  let res = Post(Fd);
+                  if (res !== "OK") alert(res);
+                  $f.addUser();
+              } catch (e) {
+                  alert(e);
+              }
+              return false;
+          }
+
+      $ds.clearSection("main");
+
+      // Crea un formulario con el título "Modificar Usuario" y un botón con el texto "Modificar"
+      const f = $dc.form("Modificar Usuario", "Modificar");
+
+      // Crea campos de entrada para nombre, DNI y correo electrónico
+      const nombre = $dc.addInputForm("text", "Nombre", "name-user");
+      const dni = $dc.addInputForm("number", "DNI", "dni-user");
+      const mail = $dc.addInputForm("email", "Mail", "mail-user");
+
+      // Asigna los valores del objeto 'user' a los campos del formulario
+      nombre.value = user.Nombre;
+      dni.value = user.Dni;
+      mail.value = user.Mail;
+
+      // Asigna la función 'Submit' como manejador del evento 'onsubmit' del formulario
+      f.onsubmit = Submit;
+    };
+
+
+
+
+
+
+
     $ds.clearSection("main");
     const f = $dc.form("Agregar Usuario", "Agregar");
     const nombre = $dc.addInputForm("text", "Nombre", "name-user");
@@ -51,6 +100,7 @@ const $$form = function () {
     const mail = $dc.addInputForm("email", "Mail", "mail-user");
    
       f.onsubmit = Submit;
+
     ListUsuarios();
     
   };
@@ -58,6 +108,8 @@ const $$form = function () {
 
 const $f = new $$form();
 
+
+f.reset();
 
 
 

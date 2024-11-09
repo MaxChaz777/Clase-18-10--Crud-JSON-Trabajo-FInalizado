@@ -1,9 +1,7 @@
 const OnLoad = function () {
-    $ds.header("body", "Instituto tupac ")
+    $ds.header("body", "Instituto Tupac ")
     $nav.init();
     $ds.main("body");
-
-
   };
 
   window.onload = OnLoad; // objeto globlal referente a la ventana del navegador
