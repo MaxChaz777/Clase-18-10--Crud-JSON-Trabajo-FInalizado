@@ -12,12 +12,15 @@
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+
+
 .form__header {
     display: flex;
     justify-content: space-between;
     background-color: #e9ecef;
     padding: 15px;
 }
+
 
 .form__title {
     font-size: 1.2rem;
@@ -29,9 +32,9 @@
     text-align: right;
 }
 
-.form__icono-container i {
-    color: #f18912;
-}
+    .form__icono-container i {
+        color: #399e7b;
+    }
 
 .form__image {
     width: 30px;
@@ -69,7 +72,7 @@
 }
 
 .form__input__button {
-    background-color: #4c6baf;
+    background-color: #006344;
     color: white;
     padding: 15px 30px;
     border: none;
@@ -80,14 +83,14 @@
 }
 
 .form__input--submit:hover {
-    background-color: #0b1581;
+    background-color: #122921;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .form__input--reset {
-    background-color: #f18912;
+    background-color: #50bd98;
 }
 
-.form__input--reset:hover {
-    background-color: #ab6906;
-}
+    .form__input--reset:hover {
+        background-color: #006344;
+    }

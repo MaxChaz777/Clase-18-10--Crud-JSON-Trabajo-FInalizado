@@ -5,16 +5,16 @@
     box-sizing: border-box;
     
   }
-  
-  body {
-   background-color: rgb(96, 165, 152);
-   display: flex;
-   flex-direction: column;
-   text-align: center;
-   font-family: Arial, sans-serif;
-   height: 100vh;
-   gap: 30px;
-  }
+
+body {
+    background: linear-gradient(to right, black, #082519);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    gap: 30px;
+}
   /*------------------ MAIN*-----------------*/
   
   .main{
@@ -28,31 +28,45 @@
 
 /*----------------------HEADER---------------------------------------*/
 
-  .header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
     color: aliceblue;
-   
-    background-color: #082519; /* Puedes cambiar el color */
-  }
+    background: linear-gradient(to right, black, #082519); /* Cambia 'blue' por el color deseado */
+  
+}
   
   .header {
     display: flex;
     align-items: center;
+
   }
-  
+
+
+
   .header__logo img {
     width: 100px; /* Ajusta el ancho según la imagen */
     height: auto;
   }
-  
-  .header__title {
+
+@font-face {
+    font-family: 'Educations';
+    src: url('Fonts/Educations.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Mejora la carga de la fuente */
+}
+
+.header__title {
+    font-family: 'Educations'; /*  fuente 'Educations' */
     font-size: 45px;
     font-weight: bold;
-    
-  }
+}
+
+
+
   
   .header__switch {
 
