@@ -29,13 +29,13 @@ public partial class _Default : System.Web.UI.Page
 
         private void AddUsuario()
         {
-            Usuario U = new Usuario();
-            U.Nombre = Request["Nombre"];
-            U.Mail = Request["Mail"];
-            U.Dni = int.Parse(Request["Dni"]);
+            Usuario u = new Usuario();
+            u.Nombre = Request["Nombre"];
+           u.Mail = Request["Mail"];
+           u.Dni = int.Parse(Request["Dni"]);
             try
             {
-                U.Add();
+                u.Add();
                 Response.Write("OK");
             }
             catch (Exception er)
@@ -46,20 +46,20 @@ public partial class _Default : System.Web.UI.Page
         }
     private void ListUsuarios()
     {
-        Usuario U = new Usuario();
-        string lista = U.List();
+        Usuario u = new Usuario();
+        string lista = u.List();
         Response.Write(lista);
 
     }
 
     private void DeleteUser()
     {
-        Usuario U = new Usuario();
-        U.ID = int.Parse(Request["ID"]);
+        Usuario u = new Usuario();
+        u.ID = int.Parse(Request["ID"]);
 
         try
         {
-            U.Erase();
+            u.Erase();
             Response.Write("OK");
         }
         catch (Exception er)
@@ -71,11 +71,16 @@ public partial class _Default : System.Web.UI.Page
     private void ModifyUser()
     {
         Usuario U = new Usuario();
+
         U.ID = int.Parse(Request["ID"]);
+        U.Nombre = Request["Nombre"];
+        U.Mail = Request["Mail"];
+        U.Dni = int.Parse(Request["DNI"]);
 
         try
         {
             U.Modify();
+
             Response.Write("OK");
         }
         catch (Exception er)
@@ -84,15 +89,20 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
+
+
     private void FindUser()
     {
-        Usuario U = new Usuario();
-        U.ID = int.Parse(Request["ID"]);
-        //U.Dni = int.Parse(Request["Dni"]);
+        Usuario u = new Usuario();
+
+        u.ID = int.Parse(Request["ID"]);
+        
+        u.Dni = int.Parse(Request["Dni"]);
+        
         try
         {
 
-            string user = JsonConvert.SerializeObject(U.Find());
+            string user = JsonConvert.SerializeObject(u.Find());
 
             Response.Write(user);
         }
