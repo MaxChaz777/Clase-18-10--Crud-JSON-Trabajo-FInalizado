@@ -113,6 +113,8 @@ namespace Crud
                 if (listaUsuarios[i].ID == data.ID)
                 {
                     listaUsuarios[i].Nombre = data.Nombre;
+                    listaUsuarios[i].Dni = data.Dni;
+                    listaUsuarios[i].Mail = data.Mail;
                     Write();
                     Clear();
                     return;
