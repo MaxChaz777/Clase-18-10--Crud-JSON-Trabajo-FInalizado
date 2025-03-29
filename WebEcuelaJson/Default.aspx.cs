@@ -1,12 +1,7 @@
-﻿using System;
+using System;
+using System.IO;
+using System.Text.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Crud;
-using Newtonsoft.Json;
 
 public partial class _Default : System.Web.UI.Page
 {
@@ -75,7 +70,7 @@ public partial class _Default : System.Web.UI.Page
         U.ID = int.Parse(Request["ID"]);
         U.Nombre = Request["Nombre"];
         U.Mail = Request["Mail"];
-        U.Dni = int.Parse(Request["DNI"]);
+        U.Dni = int.Parse(Request["Dni"]);
 
         try
         {
