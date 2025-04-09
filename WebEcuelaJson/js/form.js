@@ -1,4 +1,8 @@
 const $$form = function () {
+
+
+
+
     this.addUser = function () {
         const Submit = function () {
 
@@ -18,19 +22,8 @@ const $$form = function () {
             return false;
 
 
-            //const res = Post(Fd);
-            //try {
-            //    MainUser = JSON.parse(res);       
-            //}
-            //catch (e) { alert(res); }
-            //return false;
-            //f.reset();
-
 
         }
-
-
-
 
 
         const $z = {
@@ -71,23 +64,16 @@ const $$form = function () {
   
             // Crear formulario 2 con el título "Eliminar Usuario"
             const z = $dc.form("¿Estás seguro de eliminar al usuario?", "Eliminar");
-            //const f = $dc.form("Modificar Usuario", "Modificar");
 
             // Crear un mensaje de confirmación
             const confirmationMessage = document.createElement("p");
             confirmationMessage.textContent = `¿Deseas eliminar al usuario ${user.Nombre}?`;
 
-            // Crear un botón de "Confirmar"
-            const confirmButton = document.createElement("button");
-            confirmButton.classList.add("bi-trash3-fill", "tr__icono--delet");
-            confirmButton.textContent = "Confirmar eliminación";
-            confirmButton.addEventListener("click", Submit); // Llamar a la función Submit al hacer clic
+        
 
             // Añadir el mensaje y el botón al formulario
             z.appendChild(confirmationMessage);
             z.appendChild(confirmButton);
-            f.appendChild(confirmationMessage);
-            f.appendChild(confirmButton);
             return false;
             z.onsubmit = Submit;
 
@@ -95,22 +81,33 @@ const $$form = function () {
 
 
 
-
-
         const ListUsuarios = function () {
             let fd = new FormData();
             fd.append("accion", "LISTUSUARIOS");
             const res = Post(fd);
-            let list
+            let list;
             try {
-                list = JSON.parse(res);
-
+                if (res && typeof res === "string") {
+                    // Verificar si la respuesta es un JSON válido antes de intentar analizarlo
+                    try {
+                        list = JSON.parse(res);
+                    } catch (jsonError) {
+                        throw new Error("Respuesta no válida del servidor: " + res);
+                    }
+                } else {
+                    throw new Error("Respuesta no válida del servidor");
+                }
+            } catch (e) {
+                alert("Error al analizar JSON: " + e.message);
+                return;
             }
-            catch (e) { alert(e); }
 
-            listTitles = ["ID", "Nombre", "DNI", "Mail"];
-            $dt.table(listTitles, list);
-            return;
+            try {
+                const listTitles = ["ID", "Nombre", "DNI", "Mail"];
+                $dt.table(listTitles, list);
+            } catch (e) {
+                alert("Error al generar la tabla: " + e.message);
+            }
         };
 
 
@@ -170,10 +167,109 @@ const $$form = function () {
 
         ListUsuarios();
 
+
+
+
     };
+
+
+
+
+    this.ListUsers = function () {
+
+        const Submit = function () {
+            try {
+
+                document.querySelector("main").innerHTML = "";
+
+//actualizar la página y continuar con el código
+             
+
+                let fd = new FormData();
+
+                fd.append("accion", "MOSTRARUSUARIOS");
+
+                const res = Post(fd); 
+                let list;
+
+
+
+                if (res && typeof res === "string") {
+                    try {
+                        list = JSON.parse(res); 
+                    } catch (jsonError) {
+                        throw new Error("Respuesta no válida del servidor: " + res);
+                    }
+                } else {
+                    throw new Error("Respuesta no válida del servidor");
+                }
+
+                const listTitles = ["ID", "Nombre", "DNI", "Mail"];
+
+                $dt.table(listTitles, list);
+
+                // Generar la tabla con los datos obtenidos
+            } catch (e) {
+                alert("Error al mostrar usuarios: " + e.message);
+            }
+        };
+
+
+        Submit(); 
+
+
+    };
+
+    this.ListCarreras = function () {
+
+        const Submit = function () {
+            try {
+
+                document.querySelector("main").innerHTML = "";
+
+                let fd = new FormData();
+
+                fd.append("accion", "MOSTRARCARRERAS");
+
+                const res = Post(fd); 
+                let list;
+
+
+
+                if (res && typeof res === "string") {
+                    try {
+                        list = JSON.parse(res); // Analizar la respuesta JSON
+                    } catch (jsonError) {
+                        throw new Error("Respuesta no válida del servidor: " + res);
+                    }
+                } else {
+                    throw new Error("Respuesta no válida del servidor");
+                }
+
+                const listTitles = ["ID", "Nombre", "CÓDIGO", "CATEDRA","MAIL"];
+
+                $dt.table(listTitles, list);
+
+                // Generar la tabla con los datos obtenidos
+            } catch (e) {
+                alert("Error al mostrar usuarios: " + e.message);
+            }
+        };
+
+
+        Submit(); // Llamar a la función para ejecutar la lógica
+
+
+    };
+
 };
 
+
+
+
+
+
+
 const $f = new $$form();
-
-
 f.reset();
+
