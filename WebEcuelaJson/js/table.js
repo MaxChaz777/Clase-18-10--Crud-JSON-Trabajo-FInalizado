@@ -141,6 +141,11 @@ function deleteUser(user, row) {
                 // Eliminar la fila del DOM si la eliminación fue exitosa
                 if (row && row.parentNode) {
                     row.parentNode.removeChild(row);
+                    z.appendChild(confirmationMessage);
+                    z.appendChild(confirmButton);
+                    window.history.go(-1);
+                    z.onsubmit = Submit;
+
                 }
             }
         } catch (e) {
@@ -155,8 +160,7 @@ function deleteUser(user, row) {
    
 
     // Crear formulario de confirmación con el título "Eliminar Usuario"
-    const z = $dc.form("¿Estás seguro de eliminar al usuario?", "Eliminar","Cancelar eliminación");
-    z.onsubmit = Submit;
+    const z = $dc.form("¿Estás seguro de eliminar al usuario?", "Eliminar");
 
     // Crear un mensaje de confirmación
     const confirmationMessage = document.createElement("p");
@@ -166,14 +170,14 @@ function deleteUser(user, row) {
     const confirmButton = document.createElement("button");
     confirmButton.classList.add("bi-trash3-fill", "tr__icono--delet");
     confirmButton.textContent = "Confirmar eliminación";
-    confirmButton.addEventListener("click", Submit); // Llamar a la función Submit al hacer clic
-
-    // Añadir el mensaje y el botón al formulario
-
+    confirmButton.addEventListener("click", Submit); // Llamar a la función Submit al hacer clic 
     z.appendChild(confirmationMessage);
     z.appendChild(confirmButton);
 
     return false;
+
+    z.onsubmit = Submit;
+
 }
 
 // Función para modificar un usuario (por ahora solo muestra un mensaje)
