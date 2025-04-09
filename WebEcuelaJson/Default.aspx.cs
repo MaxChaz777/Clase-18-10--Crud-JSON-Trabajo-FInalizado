@@ -1,7 +1,9 @@
 using System;
-using System.IO;
-using System.Text.Json;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Crud;
+using Newtonsoft.Json;
+
+
 
 public partial class _Default : System.Web.UI.Page
 {
@@ -11,35 +13,79 @@ public partial class _Default : System.Web.UI.Page
 
         switch (Request["accion"])
         {
+                  /*sección usuarios*/
 
             case "ADDUSUARIO": AddUsuario(); break;
             case "LISTUSUARIOS": ListUsuarios(); break;
+            case "MOSTRARUSUARIOS": ListUsers(); break;
 
             case "DELETEUSER": DeleteUser(); break;
             case "MODIFYUSER": ModifyUser(); break;
             case "FINDUSER": FindUser(); break;
 
+                /*sección carreras*/
+
+            case "ADDCARRERA": AddCarrera(); break;
+            case "LISTCARRERAS": ListCarrera(); break;
+            case "MOSTRARCARRERAS": ListCarers(); break;
+
+
+            case "DELETECARRERA": DeleteCarrera(); break;
+            case "MODIFYCARRERA": ModifyCarrera(); break;
+            case "FINDCARRERA": FindCarrera(); break;
         }
     }
 
-        private void AddUsuario()
-        {
-            Usuario u = new Usuario();
-            u.Nombre = Request["Nombre"];
-           u.Mail = Request["Mail"];
-           u.Dni = int.Parse(Request["Dni"]);
-            try
-            {
-                u.Add();
-                Response.Write("OK");
-            }
-            catch (Exception er)
-            {
-                Response.Write(er.Message);
-            }
+    private void AddUsuario()
+    {
+        Usuario u = new Usuario();
 
+        if (!int.TryParse(Request["Dni"], out int dni) || dni <= 0 || dni > int.MaxValue)
+        {
+            Response.Write("Ingrese DNI válido");
+            return;
         }
+
+        u.Dni = dni;
+
+        Regex regex = new Regex(@"\d"); // Detecta cualquier dígito del 0 al 9
+
+        u.Nombre = Request["Nombre"];
+
+        if (regex.IsMatch(u.Nombre))
+        {
+            Response.Write("El nombre no debe contener números.");
+            return;
+        }
+
+        u.Mail = Request["Mail"];
+
+        try
+        {
+            u.Add();
+            Response.Write("OK");
+        }
+        catch (Exception er)
+        {
+            Console.WriteLine(er.Message);
+        }
+    }
+
     private void ListUsuarios()
+    {
+        Usuario u = new Usuario();
+        string lista = u.List();
+        Response.Write(lista);
+
+    }
+    private void ListUsers()
+    {
+        Usuario u = new Usuario();
+        string lista = u.List();
+        Response.Write(lista);
+
+    }
+    private void ListCarers()
     {
         Usuario u = new Usuario();
         string lista = u.List();
@@ -50,7 +96,8 @@ public partial class _Default : System.Web.UI.Page
     private void DeleteUser()
     {
         Usuario u = new Usuario();
-        u.ID = int.Parse(Request["ID"]);
+        u.ID = int.Parse(Request["id"]);
+        Console.WriteLine(u.ID);
 
         try
         {
@@ -66,16 +113,14 @@ public partial class _Default : System.Web.UI.Page
     private void ModifyUser()
     {
         Usuario U = new Usuario();
-
         U.ID = int.Parse(Request["ID"]);
-        U.Nombre = Request["Nombre"];
         U.Mail = Request["Mail"];
         U.Dni = int.Parse(Request["Dni"]);
+        U.Nombre = Request["Nombre"];
 
         try
         {
             U.Modify();
-
             Response.Write("OK");
         }
         catch (Exception er)
@@ -84,21 +129,15 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
-
-
     private void FindUser()
     {
         Usuario u = new Usuario();
-
         u.ID = int.Parse(Request["ID"]);
-        
         u.Dni = int.Parse(Request["Dni"]);
-        
+
         try
         {
-
             string user = JsonConvert.SerializeObject(u.Find());
-
             Response.Write(user);
         }
         catch (Exception er)
@@ -106,7 +145,17 @@ public partial class _Default : System.Web.UI.Page
             Response.Write(er.Message);
         }
     }
+    private void AddCarrera() { }
+
+    private void ModifyCarrera() { }
+
+    private void DeleteCarrera() { }
+    private void ListCarrera() { }
+
+
+    private void FindCarrera() { }
+
+
 
 
 }
-
